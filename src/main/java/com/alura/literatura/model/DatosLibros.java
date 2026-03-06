@@ -8,6 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record DatosLibros(
         @JsonAlias("id") int id,
         @JsonAlias("title") String titulo,
-        @JsonAlias("summaries") String summaries,
+        @JsonAlias("summaries") String description,
         @JsonAlias("languages") String languages) {
 }

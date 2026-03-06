@@ -12,21 +12,23 @@ public class Libros {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true)
-    private String titulo;
-    @OneToMany(mappedBy = "actores", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Authors> autores;
-    private String summaries;
+    private String titulos;
+    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    private List<Authors> authors;
+    @Enumerated(EnumType.STRING)
+    private Summaries descripcion;
     @Enumerated(EnumType.STRING)
     private Languages languages;
 
-    public List<Authors> getAutores() {
-        return autores;
+    public List<Authors> getAuthors() {
+        return authors;
     }
-
+    public Libros() {
+    }
     public Libros(DatosLibros datosLibros) {
         this.id = datosLibros.id();
-        this.titulo =datosLibros.titulo();
-        this.summaries = datosLibros.summaries();
+        this.titulos =datosLibros.titulo();
+        this.descripcion = Summaries.fromString(datosLibros.description().split(",")[0].trim());
         this.languages = Languages.fromString(datosLibros.languages().split(",")[0].trim());
     }
 
@@ -46,13 +48,6 @@ public class Libros {
         this.titulo = titulo;
     }
 
-    public String getSummaries() {
-        return summaries;
-    }
-
-    public void setSummaries(String summaries) {
-        this.summaries = summaries;
-    }
 
     public Languages getLanguages() {
         return languages;
